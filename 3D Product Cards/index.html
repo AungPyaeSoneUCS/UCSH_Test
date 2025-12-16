@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card">
+        <div class="overflow">
+          <div class="model">
+            <model-viewer camera-orbit="64deg 25deg 64m" src="https://assets.codepen.io/3421562/leaves_keyboard.glb" shadow-intensity="0.4"></model-viewer>
+          </div>
+        </div>
+        <div class="glass">
+          <div class="gradient-blur"><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </div>
+        <div class="content">
+          <h2>LeafKey</h2>
+          <p>A keyboard that brings the tranquility of the forest to your fingertips.</p>
+          <div class="options">
+            <div onclick="changeModelStyle(this, 0);" style="background: #f2c173;"></div>
+            <div onclick="changeModelStyle(this, 60);" style="background: #96dd78;"></div>
+            <div onclick="changeModelStyle(this, 110);" style="background: #6ee5bc;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="overflow">
+          <div class="model">
+            <model-viewer camera-orbit="64deg 25deg 64m" src="https://assets.codepen.io/3421562/topo_keyboard.glb" shadow-intensity="0.4"></model-viewer>
+          </div>
+        </div>
+        <div class="glass">
+          <div class="gradient-blur"><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </div>
+        <div class="content">
+          <h2>TopoKey</h2>
+          <p>Custom illuminated keyboard with neon topology mapped out in every key.</p>
+          <div class="options">
+            <div onclick="changeModelStyle(this, 0);" style="background: #2cb4f0;"></div>
+            <div onclick="changeModelStyle(this, 110);" style="background: #ff69e4;"></div>
+            <div onclick="changeModelStyle(this, 290);" style="background: #16b83f;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="overflow">
+          <div class="model">
+            <model-viewer camera-orbit="64deg 25deg 64m" src="https://assets.codepen.io/3421562/panda_keyboard.glb" shadow-intensity="0.4"></model-viewer>
+          </div>
+        </div>
+        <div class="glass">
+          <div class="gradient-blur"><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </div>
+        <div class="content">
+          <h2>PandaKey</h2>
+          <p>Panda, panda, panda, panda, panda, panda... panda</p>
+          <div class="options">
+           <!-- <div onclick="changeModelStyle(this, 0);" style="background: #1e1e1e;"></div>
+            <div onclick="changeModelStyle(this, 0, 1);" style="background: #eee;"></div> -->
+          </div>
+        </div>
+      </div>
+      
+      <script>
+        (() => {
+          const modelViewers = document.querySelectorAll('model-viewer');
+          const cards = document.querySelectorAll('.card');
+          const defaultOrbit = '64deg 25deg 64m';
+          const hoverOrbit = '90deg -42deg 80m';
+          const applyOrbit = (modelViewer, orbit) => {
+            modelViewer.setAttribute('camera-orbit', orbit);
+            modelViewer.setAttribute('interpolation-decay', '200');
+          };
+          cards.forEach((card, index) => {
+            const modelViewer = modelViewers[index];
+            if (modelViewer) {
+              card.addEventListener('mouseenter', () => applyOrbit(modelViewer, hoverOrbit));
+              card.addEventListener('mouseleave', () => applyOrbit(modelViewer, defaultOrbit));
+              modelViewer.addEventListener('load', () => {
+                modelViewer.classList.add('loaded');
+              });
+            } else {
+              console.log(`No model found for card at i:${index}`);
+            }
+          });
+        })();
+        function changeModelStyle(element, deg, invert = 0) {
+          const card = element.closest('.card');
+          const modelViewer = card.querySelector('model-viewer');
+          if (modelViewer) { modelViewer.style.filter = `hue-rotate(${deg}deg) invert(${invert})`; }
+        }
+      </script>
+</body>
+</html>

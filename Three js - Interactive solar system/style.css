@@ -1,0 +1,124 @@
+/* Copyright (c) 2025 by nskrgv (https://codepen.io/nskrgv/pen/bqNdBj) */
+a {
+  position: absolute;
+  text-decoration: none;
+  color: white;
+  font-weight: 100;
+  left: 50px;
+  bottom: -20px;
+  transition: 0.3s;
+}
+a:hover {
+  font-weight: 300;
+}
+body {
+  color: #000;
+  font-family: Raleway;
+  font-weight: 100;
+  font-size: 15px;
+  font-weight: bold;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+#content {
+  position: absolute;
+}
+body #container img {
+  position: absolute;
+  left: 50px;
+  z-index: 2;
+  width: 2px;
+  height: 0px;
+  top: 50%;
+  margin-top: -100px;
+}
+body #container #welcome {
+  opacity: 0;
+  width: 900px;
+  padding-left: 20px;
+  color: white;
+  font-size: 18pt;
+  position: absolute;
+  top: 50%;
+  margin-top: -35px;
+  left: 50px;
+}
+body #container #welcome #lastSentence {
+  font-family: 'Raleway';
+  margin: 0;
+  font-weight: 400;
+  font-size: 14pt;
+}
+body #container #welcome #firstSentence {
+  font-weight: 500;
+  font-size: 22pt;
+  margin: 0;
+  margin-bottom: 8px;
+  margin-top: 2px;
+}
+body #container #welcome #universe {
+  text-transform: uppercase;
+  font-family: 'Raleway';
+  font-weight: 800;
+}
+body #container #content {
+  top: 50%;
+  margin-top: -70px;
+  width: 500px;
+  left: 70px;
+}
+body #container #content h2 {
+  margin: 0;
+}
+body #container #content span {
+  font-family: Raleway;
+  font-weight: 600;
+}
+body #container #content #contentTitle {
+  font-family: Raleway;
+  color: white;
+  opacity: 1;
+  font-weight: 200;
+  letter-spacing: 1.5px;
+  font-size: 26pt;
+}
+body #container #content #contentTitle span {
+  color: #F66120;
+}
+body #container #content #contentTitle div {
+  font-size: 12pt;
+  display: inline-block;
+}
+body #container #content #subtitle {
+  letter-spacing: 1.5px;
+  margin: 0;
+  font-size: 16pt;
+  font-family: Raleway;
+  font-weight: 200;
+  color: white;
+}
+body #container #content #description {
+  color: white;
+  letter-spacing: 1.5px;
+  font-family: Raleway;
+  font-weight: 200;
+  font-size: 16pt;
+}
+body #container #content #description span {
+  color: #F66120;
+}
+body #container #content #description div {
+  color: #acacac;
+  font-size: 10pt;
+}
+body #container #content #description a {
+  color: white;
+  line-height: 10px;
+  transition: 0.3s;
+}
+body #container #content #description a:hover {
+  line-height: 11px;
+  font-weight: 500;
+}

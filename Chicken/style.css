@@ -1,0 +1,427 @@
+/* Copyright (c) 2025 by Julia Miocene (https://codepen.io/miocene/pen/OPVZwEx) */
+body { background-color: #fff0ea; }
+
+body *, body *::before, body *::after {
+	content: '';
+	position: absolute;
+	transform-style: preserve-3d;
+	transform-origin: top left;
+}
+
+.chicken {
+	--red: #FF5E5B;
+	--white: #FFFFFF;
+	--orange: #ff945b;
+	--light: #FFF4CD;
+	--shadow: color-mix(in srgb, #c07d9e, #000000 50%);
+
+	font-size: min(2vw, 2vh);
+	top: 50%; left: 50%;
+
+	transform-origin: 3em 2em;
+	transform: rotateX(65deg) rotateZ(45deg);
+	animation: chicken 5s linear infinite;
+}
+@keyframes chicken {
+	to { transform: rotateX(65deg) rotateZ(calc(45deg + 1turn)); }
+}
+
+
+
+/* basic smart cube */
+.cube {
+	width: var(--x); height: var(--y);
+	background-color: color-mix(in srgb, var(--color) 50%, #333333);
+}
+.cube::before {
+	width: 100%; height: var(--z);
+	background-color: color-mix(in srgb, var(--color) 70%, #333333);
+	transform-origin: top center;
+	rotate: x 90deg;
+}
+.cube::after {
+	width: 100%; height: var(--z);
+	background-color: color-mix(in srgb, var(--color) 90%, white);
+	translate: 0 var(--y);
+	transform-origin: top center;
+	rotate: x 90deg;
+}
+.cube > div:nth-child(1) {
+	width: 100%; height: 100%;
+	background-color: var(--color);
+	translate: 0 0 var(--z);
+}
+.cube > div:nth-child(1)::before {
+	width: var(--z); height: 100%;
+	background-color: color-mix(in srgb, var(--color) 90%, #333333);
+	transform-origin: left center;
+	rotate: y 90deg;
+}
+.cube > div:nth-child(1)::after {
+	width: var(--z); height: 100%;
+	background-color: color-mix(in srgb, var(--color) 90%, #333333);
+	transform-origin: left center;
+	rotate: y 90deg;
+	translate: var(--x);
+}
+
+
+
+/* head */
+.chicken__head {
+	--x: 6em; --y: 7em; --z: 8em;
+	--color: var(--white);
+}
+.chicken__head > div::before,
+.chicken__head > div::after {
+	background-image: linear-gradient(black, black);
+	background-position: 2em 4em;
+	background-size: 1em 1em;
+	background-repeat: no-repeat;
+}
+
+.chicken__beak {
+	--x: 2em; --y: 3em; --z: 2em;
+	translate: 2em 7em 4em;
+	--color: var(--orange);
+}
+
+.chicken__wattle {
+	--x: 2em; --y: 2em; --z: 2em;
+	translate: 2em 7em 2em;
+	--color: var(--red);
+}
+
+.chicken__comb {
+	--x: 2em; --y: 4em; --z: 2em;
+	translate: 2em 2em 8em;
+	--color: var(--red);
+}
+
+
+
+/* body */
+.chicken__body {
+	--x: 6em; --y: 10em; --z: 5em;
+	translate: 0em -3em -5em;
+	--color: var(--white);
+}
+
+.chicken__tail {
+	--x: 4em; --y: 2em; --z: 5em;
+	translate: 1em -5em -5em;
+	--color: var(--white);
+}
+
+.chicken__wing {
+	--x: 2em; --y: 6em; --z: 3em;
+	--color: var(--white);
+}
+.chicken__wing-left {
+	translate: -2em 0em -4em;
+}
+.chicken__wing-right {
+	translate: 6em 0em -4em;
+}
+
+.chicken__knee {
+	--x: 1em; --y: 1em; --z: 3em;
+	--color: var(--orange);
+}
+.chicken__knee-right {
+	translate: 5em 2em -8em;
+}
+.chicken__knee-left {
+	translate: 0em 2em -8em;
+}
+
+.chicken__foot {
+	--x: 3em; --y: 3em; --z: 1em;
+	--color: var(--orange);
+}
+.chicken__foot-right {
+	translate: 4em 1em -9em;
+}
+.chicken__foot-left {
+	translate: -1em 1em -9em;
+}
+
+.chicken__finger {
+	--x: 1em; --y: 2em; --z: 1em;
+	--color: var(--orange);
+}
+.chicken__finger-one {
+	translate: -1em 4em -9em;
+}
+.chicken__finger-two {
+	translate: 1em 4em -9em;
+}
+.chicken__finger-three {
+	translate: 4em 4em -9em;
+}
+.chicken__finger-four {
+	translate: 6em 4em -9em;
+}
+
+
+
+/* light source */
+.lightsource {
+	--side: min(2vw, 2vh);
+	--angle: -41.8deg;
+	--color: #ffc600;
+	top: 0em; left: 2em;
+	width: calc(var(--side) * 1.62);
+	height: calc(var(--side) * 1.54);
+	transform-origin: 50% 50%;
+	transform: rotateY(0deg) rotateX(-45deg) translateZ(32em);
+}
+.lightsource div {
+	width: var(--side);
+	height: calc((sqrt(3) / 2) * var(--side));
+}
+.lightsource div::before, .lightsource::before {
+	width: 100%; height: 100%;
+}
+.lightsource::before {
+	background-color: color-mix(in srgb, var(--color), black 50%);
+	clip-path: polygon(0% 38%, 50% 0%, 100% 38%, 81% 100%, 19% 100%);
+}
+.lightsource::after {
+	top: 50%; left: 50%;
+	width: 150%; height: 150%;
+	background-color: color-mix(in srgb, var(--color), white 70%);
+	filter: blur(3vw);
+	translate: -50% -50% -0.1px;
+}
+.lightsource-0 {
+	transform: translate(calc(var(--side) * .31), calc(var(--side) * 0.16)) translateZ(calc(var(--side) * -.85)) rotateX(100.7deg);
+}
+.lightsource-0::before {
+	background-color: color-mix(in srgb, var(--color), white 0%);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.lightsource-1 {
+	transform: rotateZ(60deg) rotateX(var(--angle));
+}
+.lightsource-1::before {
+	background-color: color-mix(in srgb, var(--color), black 5%);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.lightsource-1-1 {
+	transform: rotateZ(60deg) rotateX(var(--angle));
+}
+.lightsource-1-1::before {
+	background-color: color-mix(in srgb, var(--color), white 0%);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.lightsource-1-1-1 {
+	left: 50%; top: 100%;
+	transform: rotateZ(-60deg) rotateX(var(--angle));
+}
+.lightsource-1-1-1::before {
+	background-color: color-mix(in srgb, var(--color), black 5%);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.lightsource-1-1-1-1 {
+	transform: rotateZ(60deg) rotateX(var(--angle));
+}
+.lightsource-1-1-1-1::before {
+	background-color: color-mix(in srgb, var(--color), white 0%);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.lightsource-2 {
+	left: 50%; top: 100%;
+	transform: rotateZ(-60deg) rotateX(var(--angle));
+}
+.lightsource-2::before {
+	background-color: color-mix(in srgb, var(--color), black 5%);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.lightsource-2-1 {
+	left: 50%;top: 100%;
+	transform: rotateZ(-60deg) rotateX(var(--angle));
+}
+.lightsource-2-1::before {
+	background-color: color-mix(in srgb, var(--color), white 0%);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.lightsource-2-1-1 {
+	transform: rotateZ(60deg) rotateX(var(--angle));
+}
+.lightsource-2-1-1::before {
+	background-color: color-mix(in srgb, var(--color), black 5%);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.lightsource-2-1-1-1 {
+	top: 100%; left: 50%;
+	transform: rotateZ(-60deg) rotateX(var(--angle));
+}
+.lightsource-2-1-1-1::before {
+	background-color: color-mix(in srgb, var(--color), white 0%);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.lightsource-2-1-1-1-1 {
+	transform: rotateZ(60deg) rotateX(var(--angle));
+}
+.lightsource-2-1-1-1-1::before {
+	background-color: color-mix(in srgb, var(--color), black 5%);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.lightsource-3 {
+	transform: rotateX(calc(180deg - var(--angle)));
+}
+.lightsource-3::before {
+	background-color: color-mix(in srgb, var(--color), white 40%);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.lightsource-3-1 {
+	transform: rotateZ(60deg) rotateX(calc(var(--angle) * -1));
+}
+.lightsource-3-1::before {
+	background-color: color-mix(in srgb, var(--color), white 50%);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.lightsource-3-1-1 {
+	left: 50%; top: 100%;
+	transform: rotateZ(-60deg) rotateX(calc(var(--angle) * -1));
+}
+.lightsource-3-1-1::before {
+	background-color: color-mix(in srgb, var(--color), white 55%);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.lightsource-3-2 {
+	left: 50%; top: 100%;
+	transform: rotateZ(-60deg) rotateX(calc(var(--angle) * -1));
+}
+.lightsource-3-2::before {
+	background-color: color-mix(in srgb, var(--color), white 45%);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.lightsource-3-2-1 {
+	transform: rotateZ(60deg) rotateX(calc(var(--angle) * -1));
+}
+.lightsource-3-2-1::before {
+	background-color: color-mix(in srgb, var(--color), white 50%);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+
+
+/* COLORING */
+.chicken__head > div,
+.chicken__comb > div,
+.chicken__comb::after,
+.chicken__beak > div {
+	background-color:  color-mix(in srgb, var(--color), var(--shadow) 0%) !important;
+}
+.chicken__head::after,
+.chicken__body::after,
+.chicken__beak::after {
+	background-color:  color-mix(in srgb, var(--color), var(--shadow) 3%) !important;
+}
+.chicken__wing::after {
+	background-color:  color-mix(in srgb, var(--color), var(--shadow) 5%) !important;
+}
+.chicken__head > div::before,
+.chicken__head > div::after,
+.chicken__body > div::before,
+.chicken__body > div::after,
+.chicken__comb > div::before,
+.chicken__comb > div::after,
+.chicken__beak > div::before,
+.chicken__beak > div::after,
+.chicken__finger::after {
+	background-color:  color-mix(in srgb, var(--color), var(--shadow) 7%) !important;
+}
+.chicken__wing > div,
+.chicken__wattle > div::before,
+.chicken__wattle > div::after {
+	background-color:  color-mix(in srgb, var(--color), var(--shadow) 9%) !important;
+}
+.chicken__body > div,
+.chicken__tail > div,
+.chicken__wing > div::after,
+.chicken__wattle::after,
+.chicken__finger > div {
+	background-color:  color-mix(in srgb, var(--color), var(--shadow) 18%) !important;
+}
+.chicken__finger > div::before,
+.chicken__finger > div::after,
+.chicken__foot > div::before,
+.chicken__foot > div::after,
+.chicken__knee::after,
+.chicken__tail > div::before,
+.chicken__tail > div::after,
+.chicken__head::before {
+	background-color:  color-mix(in srgb, var(--color), var(--shadow) 32%) !important;
+}
+.chicken__knee > div::before,
+.chicken__knee > div::after,
+.chicken__wing::before,
+.chicken__beak {
+	background-color:  color-mix(in srgb, var(--color), var(--shadow) 42%) !important;
+}
+.chicken__foot::after,
+.chicken__wattle,
+.chicken__knee::before,
+.chicken__body::before {
+	background-color:  color-mix(in srgb, var(--color), var(--shadow) 44%) !important;
+}
+.chicken__foot::before,
+.chicken__wing,
+.chicken__tail::before {
+	background-color:  color-mix(in srgb, var(--color), var(--shadow) 52%) !important;
+}
+.chicken__body,
+.chicken__tail {
+	background-color:  color-mix(in srgb, var(--color), var(--shadow) 28%) !important;
+}
+.chicken__foot > div {
+	background-color:  color-mix(in srgb, var(--color), var(--shadow) 34%) !important;
+}
+
+
+
+/*  shadows  */
+.chicken__shadow {
+	width: 24em; height: 40em;
+	transform: translateX(-50%) translateY(-34em) translateZ(-9em);
+	filter: blur(2em);
+}
+.chicken__shadow::before {
+	width: 100%; height: 100%;
+	background: linear-gradient(0deg, 
+	color-mix(in srgb, 
+	color-mix(in srgb, #c07d9e, var(--shadow) 50%), transparent 75%), transparent);
+	clip-path: polygon(12em 39em, 13em 39em, 13em 37em, 17em 37em, 17em 39em, 18em 39em, 21em 36.8em, 21.8em 34.2em, 21.8em 21.9em, 21.8em 21.9em, 22.6em 6.9em, 17.4em 4em, 13.3em 3.9em, 9em 7em, 8.5em 21.9em, 8.2em 34.3em, 9em 36.8em, 11em 39em);
+}
+.chicken__head > div .shadow {
+	top: 0em; left: 2em;
+	width: 2em; height: 2em;
+	background: linear-gradient(0deg, 
+	color-mix(in srgb, 
+	color-mix(in srgb, #c07d9e, var(--shadow) 50%), transparent 85%), transparent);
+}
+.chicken__head > .shadow {
+	top: 7.01em; left: 2em;
+	width: 2em; height: 2.9em;
+	background: linear-gradient(0deg, color-mix(in srgb, color-mix(in srgb, #c07d9e, var(--shadow) 50%), transparent 85%), transparent);
+	rotate: x 90deg;
+	translate: 0 0 -0.9em;
+}
+.chicken__wattle .shadow {
+	top: 2.02em; left: 0em;
+	width: 2em; height: 2em;
+	background: linear-gradient(0deg, 
+	color-mix(in srgb, 
+	var(--shadow), transparent 80%), transparent 1.5em);
+	rotate: x 90deg;
+}
+.chicken__finger > div .shadow {
+	top: 0em; left: 0em;
+	width: 1em; height: 1.3em;
+	background: linear-gradient(180deg, 
+	color-mix(in srgb, 
+	var(--shadow), transparent 80%), transparent 1.5em);
+}

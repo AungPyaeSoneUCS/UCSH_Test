@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <!-- Copyright (c) 2025 by Voxelo (https://codepen.io/VoXelo/pen/ZYzNvVz) -->
+   
+    <div id="scene-container"></div>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  background: #000;
+}
+
+#scene-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.162.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.162.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+
+class NebulaPortal {
+  constructor() {
+    this.params = {
+      radius: 1.5,
+      displacementStrength: 0.3,
+      noiseScale: 2.0,
+      rotationSpeed: 0.2,
+      bloomIntensity: 1.5,
+      bloomEnabled: true,
+      colorA: '#0e8140',
+      colorB: '#ff66cc',
+      portalColor: '#220066'
+    };
+    this.wireframe = true;
+    this.init();
+    this.createPortal();
+    this.setupGUI();
+    this.animate();
+  }
+
+  init() {
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(
+      60,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      100
+    );
+    this.camera.position.set(0, 0, 5);
+    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    document.getElementById('scene-container').appendChild(this.renderer.domElement);
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.enableDamping = true;
+    this.controls.autoRotate = true;
+    this.controls.autoRotateSpeed = this.params.rotationSpeed;
+    this.composer = new EffectComposer(this.renderer);
+    this.composer.addPass(new RenderPass(this.scene, this.camera));
+    this.bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(window.innerWidth, window.innerHeight),
+      this.params.bloomIntensity,
+      0.4,
+      0.1
+    );
+    if (this.params.bloomEnabled) {
+      this.composer.addPass(this.bloomPass);
+    }
+    window.addEventListener('resize', () => this.onResize());
+    this.clock = new THREE.Clock();
+  }
+
+  createPortal() {
+    if (this.portal) {
+      this.scene.remove(this.portal);
+      this.portal.geometry.dispose();
+      this.portal.material.dispose();
+    }
+    const geometry = new THREE.SphereGeometry(
+      this.params.radius,
+      64,
+      64
+    );
+    const material = new THREE.ShaderMaterial({
+      uniforms: {
+        time: { value: 0 },
+        displacementStrength: { value: this.params.displacementStrength },
+        noiseScale: { value: this.params.noiseScale },
+        colorA: { value: new THREE.Color(this.params.colorA) },
+        colorB: { value: new THREE.Color(this.params.colorB) },
+        portalColor: { value: new THREE.Color(this.params.portalColor) }
+      },
+      vertexShader: `
+        uniform float time;
+        uniform float displacementStrength;
+        uniform float noiseScale;
+        varying vec3 vNormal;
+        varying vec3 vPosition;
+        vec3 mod289(vec3 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
+        vec2 mod289(vec2 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
+        vec3 permute(vec3 x) { return mod289(((x * 34.0) + 1.0) * x); }
+        float snoise(vec2 v) {
+          const vec4 C = vec4(0.211324865405187,
+                              0.366025403784439,
+                              -0.577350269189626,
+                              0.024390243902439);
+          vec2 i  = floor(v + dot(v, C.yy));
+          vec2 x0 = v - i + dot(i, C.xx);
+          vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+          vec4 x12 = x0.xyxy + C.xxzz;
+          x12.xy -= i1;
+          vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0))
+                + i.x + vec3(0.0, i1.x, 1.0));
+          vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), 0.0);
+          m = m * m;
+          m = m * m;
+          vec3 x = 2.0 * fract(p * C.www) - 1.0;
+          vec3 h = abs(x) - 0.5;
+          vec3 ox = floor(x + 0.5);
+          vec3 a0 = x - ox;
+          m *= 1.79284291400159 - 0.85373472095314 * (a0 * a0 + h * h);
+          vec3 g;
+          g.x = a0.x * x0.x + h.x * x0.y;
+          g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+          return 130.0 * dot(m, g);
+        }
+        void main() {
+          vNormal = normal;
+          vPosition = position;
+          float noise = snoise((position.xy + time) * noiseScale);
+          vec3 newPosition = position + normal * noise * displacementStrength;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float time;
+        uniform vec3 colorA;
+        uniform vec3 colorB;
+        uniform vec3 portalColor;
+        varying vec3 vNormal;
+        varying vec3 vPosition;
+        void main() {
+          float intensity = dot(normalize(vNormal), vec3(0.0, 0.0, 1.0));
+          vec3 baseColor = mix(colorA, colorB, intensity);
+          vec3 finalColor = mix(baseColor, portalColor, 0.2);
+          finalColor *= 5.0;
+          gl_FragColor = vec4(finalColor, 1.0);
+        }
+      `,
+      wireframe: this.wireframe,
+      side: THREE.DoubleSide
+    });
+    this.portal = new THREE.Mesh(geometry, material);
+    this.scene.add(this.portal);
+  }
+
+  setupGUI() {
+    const gui = new GUI();
+    const geoFolder = gui.addFolder('Geometry');
+    geoFolder.add(this.params, 'radius', 0.5, 3).onChange(() => this.createPortal());
+    geoFolder.add(this.params, 'displacementStrength', 0.0, 1.0).onChange((value) => {
+      if (this.portal) this.portal.material.uniforms.displacementStrength.value = value;
+    });
+    geoFolder.add(this.params, 'noiseScale', 0.1, 5.0).onChange((value) => {
+      if (this.portal) this.portal.material.uniforms.noiseScale.value = value;
+    });
+    geoFolder.open();
+    const animFolder = gui.addFolder('Animation');
+    animFolder.add(this.params, 'rotationSpeed', 0, 2).onChange((value) => {
+      this.controls.autoRotateSpeed = value;
+    });
+    animFolder.open();
+    const bloomFolder = gui.addFolder('Bloom');
+    bloomFolder.add(this.params, 'bloomIntensity', 0, 3).onChange((value) => {
+      this.bloomPass.strength = value;
+    });
+    bloomFolder.add(this.params, 'bloomEnabled').name('Bloom Enabled').onChange((value) => {
+      this.composer = new EffectComposer(this.renderer);
+      this.composer.addPass(new RenderPass(this.scene, this.camera));
+      if (value) {
+        this.composer.addPass(this.bloomPass);
+      }
+    });
+    bloomFolder.open();
+    const colorFolder = gui.addFolder('Colors');
+    colorFolder.addColor(this.params, 'colorA').onChange(() => {
+      if (this.portal) this.portal.material.uniforms.colorA.value.set(this.params.colorA);
+    });
+    colorFolder.addColor(this.params, 'colorB').onChange(() => {
+      if (this.portal) this.portal.material.uniforms.colorB.value.set(this.params.colorB);
+    });
+    colorFolder.addColor(this.params, 'portalColor').onChange(() => {
+      if (this.portal) this.portal.material.uniforms.portalColor.value.set(this.params.portalColor);
+    });
+    colorFolder.open();
+  }
+
+  animate() {
+    requestAnimationFrame(() => this.animate());
+    const time = this.clock.getElapsedTime();
+    if (this.portal) {
+      this.portal.material.uniforms.time.value = time;
+      this.portal.rotation.y += 0.005;
+    }
+    this.controls.update();
+    if (this.params.bloomEnabled) {
+      this.composer.render();
+    } else {
+      this.renderer.render(this.scene, this.camera);
+    }
+  }
+
+  onResize() {
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.composer.setSize(window.innerWidth, window.innerHeight);
+  }
+}
+
+new NebulaPortal();
+</script>
+
+</body>
+</html>

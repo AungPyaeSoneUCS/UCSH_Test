@@ -1,0 +1,253 @@
+/* Copyright (c) 2025 by Rafa (https://codepen.io/RAFA3L/pen/VYZrvjM) */
+
+@import url('https://fonts.cdnfonts.com/css/satoshi');
+*{ box-sizing: border-box; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth;}
+html, body { height: 100%; }
+body {
+    display: flex; flex-direction: row; flex-wrap: wrap; flex-wrap: nowrap;
+    justify-content: center; align-items: center; margin: 0; padding-top: 120px;
+    background: #ededed;
+    font-family: 'Satoshi', sans-serif;
+
+    --scale: clamp(200px, 22vw, 300px);
+}
+
+.card {
+    --clr: #7da072; --fclr: #f0ffe2;
+    &:nth-child(2) { --clr: #2e2e2e; --fclr: #fefefe; }
+    &:nth-child(3) { --clr: #fff; --fclr: #000; }
+
+    width: var(--scale); height: 364px;
+    min-width: var(--scale);
+    background: var(--clr);
+    border-radius: 8px;
+    box-shadow: 
+    -8px -8px 24px 0 #fffc,
+    1px 1px 3px 0px #0002,
+    12px 42px 24px -8px #0001,
+    10px 24px 42px 0 #0001,
+    1px 4px 12px 0 #0002;
+    &:nth-child(1) {
+          box-shadow: 
+    -8px -8px 24px 0 #fffc,
+    1px 1px 3px 0px #7da07277,
+    12px 42px 24px -8px #7da07233,
+    10px 24px 42px 0 #7da07233,
+    1px 4px 12px 0 #7da07244;
+    } 
+    &:nth-child(2) {
+    box-shadow: 
+      -8px -8px 24px 0 #fffc,
+      1px 1px 3px 0px #0006,
+      12px 42px 24px -8px #0003,
+      10px 24px 42px 0 #0003,
+      1px 4px 12px 0 #0006;
+    }
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: end; align-items: center;
+    cursor: pointer;
+
+    margin: auto 24px;
+
+    .content {
+        position: relative;
+        z-index: 1;
+        bottom: 0; top: unset;
+        height: fit-content;
+        padding: 12px 24px; 
+        h2 , p {
+            margin: 0; padding: 0;
+            line-height: 124%;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: var(--fclr);
+        }
+        p {
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+        
+        .options {
+            position: absolute;
+            display: flex; gap: 4px;
+            bottom: 8px; right: 12px;
+            > div {
+                cursor: pointer;
+                width: 24px; height: 16px;
+                border-radius: 4px;
+                background: white;
+                border: 1px solid #aaa8;
+                transition: border 0.1s ease-in-out;
+                &:hover {
+                    border: 1px solid #fff;
+                }
+            }
+        }
+    }
+    .glass {
+        pointer-events: none;
+        position: absolute;
+        bottom: 0; left: 0;
+        width: 100%; height: 80%;
+        background: linear-gradient(transparent, var(--clr) 80%);
+        border-bottom-right-radius: 8px;
+        border-bottom-left-radius: 8px;
+        overflow: hidden;
+    }
+    .overflow {
+        pointer-events: none;
+        position: absolute;
+        width: 200%; height: 200%;
+        overflow: hidden;
+        display: flex; justify-content: end; align-items: end;
+        clip-path: polygon(0 0, 100% 0, 100% 60%, 75% 60%, 75% 100%, 25% 100%, 25% 60%, 0 60%);
+    }
+    .model {
+        position: absolute;
+        width: 100%; height: 100%;
+        bottom: -10%;
+        display: flex; justify-content: center; align-items: center;
+        model-viewer{
+            position: absolute;
+            width: 500px; height: 500px;
+            width: 500px; height: calc((5/3) * var(--scale));
+            --progress-bar-color: none;
+            --progress-bar-height: 0px;
+            opacity: 0;
+            transition: filter 0.4s ease-in-out;
+            &.loaded{
+                animation: onLoad 1s ease-in forwards;
+            }
+        }
+    }
+
+    @media (max-width: 700px) {
+        &:nth-child(3) {
+            display: none;
+        }
+    }
+    @media (max-width: 468px) {
+        &:nth-child(1) {
+            display: none;
+        }
+    }
+}
+@keyframes onLoad {
+    to { opacity: 1; }
+}
+
+
+.gradient-blur {
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    inset: auto 0 0 0;
+    pointer-events: none;
+}
+.gradient-blur:nth-child(2){
+    inset: auto 0;
+}
+.gradient-blur > div,
+.gradient-blur::before,
+.gradient-blur::after {
+    position: absolute;
+    inset: 0;
+    --p1: 0%;
+    --p2: 12.5%;
+    --p3: 25%;
+    --p4: 37.5%;
+    --p5: 50%;
+    --p6: 62.5%;
+    --p7: 75%;
+    --p8: 87.5%;
+    --p9: 100%;
+}
+.gradient-blur::before {
+    content: "";
+    z-index: 1;
+    backdrop-filter: blur(0.5px);
+    mask: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) var(--p1),
+        rgba(0, 0, 0, 1) var(--p2),
+        rgba(0, 0, 0, 1) var(--p3),
+        rgba(0, 0, 0, 0) var(--p4)
+    );
+}
+.gradient-blur > div:nth-of-type(1) {
+    z-index: 2;
+    backdrop-filter: blur(1px);
+    mask: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) var(--p2),
+        rgba(0, 0, 0, 1) var(--p3),
+        rgba(0, 0, 0, 1) var(--p4),
+        rgba(0, 0, 0, 0) var(--p5)
+    );
+}
+.gradient-blur > div:nth-of-type(2) {
+    z-index: 3;
+    backdrop-filter: blur(2px);
+    mask: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) var(--p3),
+        rgba(0, 0, 0, 1) var(--p4),
+        rgba(0, 0, 0, 1) var(--p5),
+        rgba(0, 0, 0, 0) var(--p6)
+    );
+}
+.gradient-blur > div:nth-of-type(3) {
+    z-index: 4;
+    backdrop-filter: blur(4px);
+    mask: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) var(--p4),
+        rgba(0, 0, 0, 1) var(--p5),
+        rgba(0, 0, 0, 1) var(--p6),
+        rgba(0, 0, 0, 0) var(--p7)
+    );
+}
+.gradient-blur > div:nth-of-type(4) {
+    z-index: 5;
+    backdrop-filter: blur(8px);
+    mask: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) var(--p5),
+        rgba(0, 0, 0, 1) var(--p6),
+        rgba(0, 0, 0, 1) var(--p7),
+        rgba(0, 0, 0, 0) var(--p8)
+    );
+}
+.gradient-blur > div:nth-of-type(5) {
+    z-index: 6;
+    backdrop-filter: blur(16px);
+    mask: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) var(--p6),
+        rgba(0, 0, 0, 1) var(--p7),
+        rgba(0, 0, 0, 1) var(--p8),
+        rgba(0, 0, 0, 0) var(--p9)
+    );
+}
+.gradient-blur > div:nth-of-type(6) {
+    z-index: 7;
+    backdrop-filter: blur(32px);
+    mask: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) var(--p7),
+        rgba(0, 0, 0, 1) var(--p8),
+        rgba(0, 0, 0, 1) var(--p9)
+    );
+}
+.gradient-blur::after {
+    content: "";
+    z-index: 8;
+    backdrop-filter: blur(64px);
+    mask: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) var(--p8),
+        rgba(0, 0, 0, 1) var(--p9)
+    );
+}

@@ -1,0 +1,290 @@
+/* Copyright (c) 2025 by Matt Cannon (https://codepen.io/matt-cannon/pen/OPPJLNa) */
+
+:root {
+	--title: "Cyberspace Portal";
+	--author: "Matt Cannon";
+	--contact: "mc@mattcannon.design";
+	--description: "An interactive card featuring a mesmerizing glow effect that invites you to enter a portal. Once activated, you are unexpectedly sucked into the matrix, traveling through a digital tunnel filled with floating code snippets and particles, immersing you in a journey through cyberspace.";
+	--keywords: "card glow, portal, interactive card, box-shadow, 3D tunnel, Three.js, animation, CSS animation, JavaScript animation, particle effects, glowing effects, codepenchallenge, cpc-card-glow, immersive web experience";
+	--last-modified: "2025-04-15";
+	--content-language: "en";
+	--generator: "HTML5, CSS3, JavaScript, Three.js, requestAnimationFrames,";
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body {
+	overflow: hidden;
+	background: url("http://mattcannon.games/codepen/glow/background.png")
+		no-repeat center center fixed;
+	background-size: cover;
+	background-color: #0a0a0a;
+	font-family: "Unica One", sans-serif;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	position: relative;
+	perspective: 2000px;
+}
+#portalCard {
+	position: absolute;
+	width: 300px;
+	height: 350px;
+	background: rgba(10, 12, 18, 0.6);
+	backdrop-filter: blur(10px);
+	border-radius: 20px;
+	border: 1px solid rgba(0, 255, 170, 0.8);
+	box-shadow: 0 0 30px rgba(0, 255, 170, 0.5), 0 0 50px rgba(0, 179, 255, 0.3),
+		inset 0 0 20px rgba(0, 255, 170, 0.2);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	transition: all 2.2s cubic-bezier(0.1, 1, 0.1, 1);
+	z-index: 10;
+	overflow: hidden;
+	transform-style: preserve-3d;
+	position: relative;
+	transform: scale(0.85);
+}
+#portalCard::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: 19px;
+	padding: 1px;
+	background: linear-gradient(135deg, #00ffaa, #00a3ff);
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0.9;
+	transition: opacity 1.5s ease;
+	z-index: 2;
+	box-shadow: 0 0 20px rgba(0, 255, 170, 1);
+}
+#portalCard::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: 20px;
+	background: linear-gradient(
+		135deg,
+		rgba(0, 255, 170, 0.15) 0%,
+		rgba(0, 179, 255, 0.15) 100%
+	);
+	opacity: 0.5;
+	z-index: 1;
+}
+.gooey-effect {
+	position: absolute;
+	inset: 0;
+	border-radius: 20px;
+	overflow: hidden;
+	z-index: 0;
+	opacity: 0.9;
+	filter: blur(2px);
+}
+.gooey-blob {
+	position: absolute;
+	border-radius: 50%;
+	filter: blur(12px);
+	animation: float-blob 15s infinite ease-in-out;
+	opacity: 0.9;
+}
+.gooey-blob:nth-child(1) {
+	width: 250px;
+	height: 250px;
+	left: -50px;
+	top: 100px;
+	background: radial-gradient(
+		circle,
+		rgba(0, 255, 170, 0.7) 0%,
+		rgba(0, 255, 170, 0) 70%
+	);
+	animation-duration: 8s;
+}
+
+.gooey-blob:nth-child(2) {
+	width: 200px;
+	height: 200px;
+	right: -30px;
+	top: 50px;
+	background: radial-gradient(
+		circle,
+		rgba(0, 179, 255, 0.7) 0%,
+		rgba(0, 179, 255, 0) 70%
+	);
+	animation-duration: 8s;
+	animation-delay: -3s;
+}
+.gooey-blob:nth-child(3) {
+	width: 180px;
+	height: 180px;
+	right: 50px;
+	bottom: 100px;
+	background: radial-gradient(
+		circle,
+		rgba(0, 255, 170, 0.7) 0%,
+		rgba(0, 255, 170, 0) 70%
+	);
+	animation-duration: 10s;
+	animation-delay: -4s;
+}
+.gooey-blob:nth-child(4) {
+	width: 220px;
+	height: 220px;
+	left: 30px;
+	bottom: 30px;
+	background: radial-gradient(
+		circle,
+		rgba(0, 179, 255, 0.7) 0%,
+		rgba(0, 179, 255, 0) 70%
+	);
+	animation-duration: 10s;
+	animation-delay: -4s;
+}
+@keyframes float-blob {
+	0%,
+	100% {
+		transform: translate(0, 0) scale(1);
+	}
+	20% {
+		transform: translate(30px, 20px) scale(1.05);
+	}
+	40% {
+		transform: translate(20px, 40px) scale(0.95);
+	}
+	60% {
+		transform: translate(-20px, 30px) scale(1.1);
+	}
+	80% {
+		transform: translate(-30px, -20px) scale(0.9);
+	}
+}
+
+#portalCard:hover .cursor-blur {
+	transform: scale(1);
+	transition: transform 1s ease-out;
+}
+#portalCard h1 {
+	color: white;
+	font-weight: 300;
+	font-size: 40px;
+	margin-bottom: 20px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	transition: all 0.8s ease;
+	text-shadow: 0 0 15px rgba(0, 255, 170, 0.7);
+	position: relative;
+	z-index: 5;
+	line-height: 1;
+	text-align: center;
+}
+#portalButton {
+	padding: 16px 38px;
+	background: rgba(10, 12, 20, 0.3);
+	border: 2px solid #00ffaa;
+	border-radius: 50px;
+	color: white;
+	font-family: "Unica One", sans-serif;
+	font-weight: 400;
+	font-size: 22px;
+	letter-spacing: 1px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	position: relative;
+	z-index: 20;
+	backdrop-filter: blur(5px);
+	overflow: hidden;
+	box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+	text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+}
+#portalButton::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		90deg,
+		rgba(0, 255, 170, 0.3),
+		rgba(0, 179, 255, 0.3)
+	);
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+#portalButton:hover {
+	transform: scale(1.05);
+	box-shadow: 0 0 15px rgba(0, 255, 170, 0.7);
+	text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+	border-color: #00ffdd;
+}
+#portalButton:hover::before {
+	opacity: 1;
+}
+#tunnelCanvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	clip-path: circle(10% at 50% 50%);
+	transition: clip-path 1.8s ease-out;
+}
+#tunnelCanvas.active {
+	clip-path: circle(150% at 50% 50%);
+}
+#portalContent {
+	transition: all 1.1s ease;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	z-index: 5;
+}
+#tunnelContainer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+	pointer-events: none;
+	transform-style: preserve-3d;
+	transition: all 0s;
+}
+#tunnelContainer.active {
+	pointer-events: all;
+	z-index: 15;
+}
+#portalCard.zoomIn {
+	transform: translateZ(500px) scale(6);
+	opacity: 0;
+	transition: transform 2s ease-out, opacity 1.5s ease-in;
+}
+#portalCard.zoomIn::before,
+#portalCard.zoomIn::after {
+	opacity: 0;
+}
+#portalCard.zoomIn #portalContent {
+	opacity: 0;
+	transform: scale(0.5);
+}
+.card-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.1;
+	pointer-events: none;
+	z-index: -1;
+}

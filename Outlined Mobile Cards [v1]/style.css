@@ -1,0 +1,183 @@
+/* Copyright (c) 2025 by mandynicole (https://codepen.io/mandynicole/pen/JojJOZY) */
+
+:root {
+	--bg: 25% 0.0075 70;
+
+	--pink: 77.75% 0.1003 350.51;
+	--gold: 84.16% 0.1169 71.19;
+	--mint: 84.12% 0.1334 165.28;
+
+	--mobile--w: 360px;
+	--mobile--h: 540px;
+
+	--outline-w: 9px;
+	--preview-bg: #fff;
+}
+
+body {
+	height: 100%;
+}
+
+body {
+	background: linear-gradient(
+		50deg,
+		oklch(from oklch(var(--bg)) 50% c h),
+		oklch(from oklch(var(--bg)) 90% c h)
+	);
+	background-attachment: fixed;
+	padding: 3rem 10vw;
+}
+
+.preview__container {
+	display: flex;
+	flex-wrap: wrap;
+
+	place-items: center;
+	place-content: center;
+
+	height: 100%;
+
+	/* fade out other cards when one is :hover/:focus-within */
+	&:has(:hover, :focus-within) {
+		.preview:not(:hover, :focus) {
+			opacity: 0.4;
+		}
+	}
+}
+
+.preview {
+	--bg-pos-y--start: 0;
+	--bg-pos-y--end: 0;
+	--bg-pos-y: var(--bg-pos-y--start);
+	--delay: 0;
+	--duration: 6s;
+
+	--shadow-blur: 24px;
+	--shadow-color: oklch(var(--bg));
+
+	background-clip: padding-box;
+	/* 	background-origin: content-box; */
+	background-image: var(--img);
+	background-position-y: var(--bg-pos-y);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+
+	border: var(--outline-w) solid var(--border-color, transparent);
+	border-radius: 6px;
+	box-shadow: 0 0 var(--shadow-blur) 0 var(--shadow-color);
+
+	transition-property: border, 	box-shadow, 	filter, 	outline-offset, 	opacity, 	rotate,		scale,	z-index;
+	transition-duration: 0.15s, 	0.15s, 				0.6s, 		0.6s, 						0.3s, 		0.3s,			0.3s,		0.15s;
+
+	filter: grayscale(100%) sepia(5%);
+	mix-blend-mode: multiply;
+	opacity: 0.69;
+
+	/* 		backface-visibility: hidden;
+	transform: translateZ(0) perspective(1px); */
+	/* 	transform-origin: center center; */
+
+	scale: 0.85;
+	rotate: var(--rotation, -4deg);
+	/* 	will-change: box-shadow, filter, rotate, scale, z-index; */
+
+	outline: var(--outline-w) solid var(--preview-bg);
+	outline-offset: var(--outline-w);
+
+	min-height: var(--mobile--h);
+	height: 100%;
+
+	min-width: var(--mobile--w);
+	width: 100%;
+
+	position: relative;
+
+	animation-name: bg-scroll;
+	animation-delay: var(--delay);
+	animation-duration: var(--duration);
+	animation-fill-mode: forwards;
+
+	&:focus-within,
+	&:hover {
+		--shadow-blur: 200px;
+		--shadow-color: oklch(var(--gold));
+		--border-color: var(--shadow-color);
+
+		background-color: white;
+		mix-blend-mode: initial;
+		filter: none;		
+		opacity: 1;	
+		
+		outline-offset: calc(var(--outline-w) / 2);
+		
+		scale: 1;
+		rotate: 0deg;
+		
+		transition-property: border, 		box-shadow, 		filter, 	outline-offset, 	opacity,	rotate,		scale, 		z-index;
+		transition-duration: 0.15s, 		0.15s, 					0.3s, 		0.3s, 						0.3s, 		0.3s, 		0.3s, 		0.15s;
+	}
+
+	&:focus-within {
+		--shadow-color: oklch(var(--pink));
+		z-index: 5;
+	}
+	
+	&:hover	{
+		z-index: 6;
+		&:focus { --shadow-color: oklch(var(--mint)); }
+	}
+
+	&.mobile {
+		max-height: var(--mobile--h);
+		max-width: var(--mobile--w);
+	}
+
+	&:nth-of-type(2) {
+		--bg-pos-y--end: calc(var(--mobile--h) * -1.025);
+		/*       --delay: .25s; */
+		--rotation: 3deg;
+	}
+
+	&:nth-of-type(3) {
+		--bg-pos-y--end: calc(var(--mobile--h) * -2.25);
+		/*       --delay: .5s; */
+		--duration: 6.5s;
+		--rotation: -1deg;
+	}
+
+	&:nth-of-type(4) {
+		--bg-pos-y--end: calc(var(--mobile--h) * -3.75);
+		/*       --delay: .75s; */
+		--duration: 6.75s;
+		--rotation: -5deg;
+	}
+
+	&:nth-of-type(5) {
+		--bg-pos-y--end: calc(var(--mobile--h) * -4.82);
+		/*       --delay: 1s; */
+		--duration: 7s;
+		--rotation: -2deg;
+	}
+
+	&:nth-of-type(6) {
+		--bg-pos-y--end: calc(var(--mobile--h) * -5.85);
+		/*       --delay: 1.25s; */
+		--duration: 7.25s;
+		--rotation: 2deg;
+	}
+
+	&:nth-of-type(7) {
+		--bg-pos-y--end: calc(var(--mobile--h) * -7.21);
+		/*       --delay: 1.5s; */
+		--duration: 7.5s;
+		--rotation: 4deg;
+	}
+}
+
+/* preview-scroll */
+@keyframes bg-scroll {
+	to {
+		background-position-y: var(--bg-pos-y--end);
+	}
+}

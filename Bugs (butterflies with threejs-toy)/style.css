@@ -1,0 +1,92 @@
+body, html, #app {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    // background-image: url("https://images.pexels.com/photos/2961995/pexels-photo-2961995.jpeg?auto=compress&cs=tinysrgb&h=800&dpr=1");
+  }
+  
+  #app {
+    overflow: hidden;
+    touch-action: pan-up;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    text-shadow: 0 0 5px #000000, 0 0 20px #000;
+    user-select: none;
+  }
+  
+  #app h1 {
+    --fontSize: 50px;
+    --lineHeight: 70px;
+    width: auto;
+    height: calc(2 * var(--lineHeight));
+    line-height: var(--lineHeight);
+    margin: calc(50vh - var(--lineHeight)) auto 0;
+    font-size: var(--fontSize);
+      
+  }
+  
+  #app a {
+    margin-top: 10px;
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  #app canvas {
+    display: block;
+    position: fixed;
+    z-index: -1;
+    top: 0;
+  }
+  
+  @keyframes flap {
+      0%, 20%, 80%, 100% {
+          transform: scaleX(1) rotate(5deg);
+      }
+      50% {
+          transform: scaleX(0.7) rotate(7deg);
+      }
+  }
+  
+  h1 {
+      text-align: center;
+      font-size: 2rem;
+  }
+  
+  h1 span {
+      display: inline-block;
+      animation: flap 0.75s infinite ease-in-out;
+  }
+  
+  #controls {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+  }
+  .btn {
+      background-color: rgba(0, 0, 0, 0.4);
+      border: none;
+      color: rgba(255, 255, 255, 0.4);
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 2px 2px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+  }
+  .btn:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 0, 1);
+  }
+  #fullscreenBtn {
+      font-size: 20px;
+      z-index: 100;
+  }
+  

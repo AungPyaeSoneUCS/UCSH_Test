@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+<html lang="mm">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="VfLAAuLQYcD0XEZniZ6m1v08cKLnoKEiQpdE0yBq">
+
+    <!-- Prevent Flash of Wrong Theme (FOWT) -->
+    <style>
+        /* Default styles (light mode) */
+        :root {
+            color-scheme: light;
+        }
+
+        /* Dark mode styles */
+        :root[class~="dark"] {
+            color-scheme: dark;
+        }
+
+        /* Hide content until dark mode is set */
+        html.dark-mode-init {
+            visibility: hidden;
+        }
+
+        /* Hide elements with x-cloak */
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        // Add init class to hide content
+        document.documentElement.classList.add('dark-mode-init');
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia(
+                '(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // Remove init class to show content
+        requestAnimationFrame(() => {
+            document.documentElement.classList.remove('dark-mode-init');
+        });
+    </script>
+
+    <title>Fairway</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <!-- Scripts -->
+    <link rel="preload" as="style" href="/build/assets/app-DnIK3lOv.css" /><link rel="modulepreload" href="/build/assets/app-Crys_eQI.js" /><link rel="stylesheet" href="/build/assets/app-DnIK3lOv.css" /><script type="module" src="/build/assets/app-Crys_eQI.js"></script></head>
+
+<body class="font-sans antialiased">
+    <div class="min-h-screen flex flex-col bg-gray-100 dark:bg-gray-900"
+        style="background-image: url('/images/abstract-blur-bg.svg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
+                    <nav x-data="{ open: false, notificationOpen: false, languageOpen: false }" class="bg-white/70 dark:bg-gray-800/50 border-b border-gray-300 dark:border-gray-700/70">
+    <!-- Primary Navigation Menu -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center gap-3">
+                                    <button onclick="history.back()"
+                        class="inline-flex items-center justify-center rounded-lg bg-white dark:bg-gray-800/90 px-3 py-2 text-sm font-medium text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/75 transition-colors duration-150">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                
+                <!-- Brand Name -->
+                <div class="shrink-0 flex items-center">
+                    <a href=""
+                        class="text-xl font-semibold tracking-tight text-gray-800 dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-300 inline-flex items-center gap-2">
+                        Fairway
+                        <span
+                            class="px-2 py-1 text-xs font-medium rounded bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-400 ring-1 ring-inset ring-indigo-700/20 dark:ring-indigo-400/30">beta</span>
+                    </a>
+                </div>
+
+                <!-- Navigation Links (Hidden on mobile and tablet) -->
+                <div class="hidden lg:flex space-x-8 ms-10">
+                    <a class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 focus:border-gray-300 dark:focus:border-gray-700 transition duration-150 ease-in-out" href="">
+    ပင်မစာမျက်နှာ
+</a>
+                    <a class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 focus:border-gray-300 dark:focus:border-gray-700 transition duration-150 ease-in-out" href="/waiting-list">
+    အတန်းသစ်စောင့်ရန်
+</a>
+                    <a class="inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 dark:border-indigo-600 text-sm font-medium leading-5 text-gray-900 dark:text-gray-100 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out" href="https://fairway-main-v5kqlh.laravel.cloud/contact">
+    ဆက်သွယ်ရန်
+</a>
+                </div>
+            </div>
+
+            <!-- Settings Dropdown and Theme Switcher -->
+            <div class="flex items-center gap-2">
+                <!-- Language Switcher -->
+                <div class="relative hidden">
+                    <button @click="languageOpen = !languageOpen"
+                        class="inline-flex items-center p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                        </svg>
+                    </button>
+
+                    <!-- Language Dropdown -->
+                    <div x-cloak x-show="languageOpen" x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-75"
+                        x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                        @click.away="languageOpen = false"
+                        class="fixed md:absolute inset-x-0 md:inset-x-auto md:right-0 top-16 md:top-auto mx-auto md:mx-0 mt-1 w-[98vw] md:w-40 max-w-sm bg-white dark:bg-gray-700 rounded-md shadow-lg overflow-hidden z-50 left-1/2 -translate-x-1/2 transform sm:left-auto sm:translate-x-0">
+                        <div class="py-1">
+                            <a href="https://fairway-main-v5kqlh.laravel.cloud/language/en"
+                                class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600  flex items-center justify-between">
+                                <span>English</span>
+                                                            </a>
+                            <a href="https://fairway-main-v5kqlh.laravel.cloud/language/mm"
+                                class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 bg-gray-100 dark:bg-gray-600 flex items-center justify-between">
+                                <span>မြန်မာ</span>
+                                                                    <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <button x-data @click="$store.darkMode.toggle()" type="button"
+    class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+    <svg x-cloak x-show="!$store.darkMode.on" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+        viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+    </svg>
+    <svg x-cloak x-show="$store.darkMode.on" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+        viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>
+</button>
+                                    <!-- Messages Link -->
+                    <div class="relative" x-data="{ unreadMessageCount: 0, messageLoading: true }" x-init="fetch('/messages/unread-count')
+                        .then(response => response.json())
+                        .then(data => {
+                            unreadMessageCount = data.count;
+                            messageLoading = false;
+                        });">
+                        <a href="https://fairway-main-v5kqlh.laravel.cloud/messages"
+                            class="relative inline-flex items-center p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+                            <div class="relative">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                <span x-cloak x-show="!messageLoading && unreadMessageCount > 0" x-text="unreadMessageCount"
+                                    class="absolute -top-1.5 -right-1.5 min-w-[16px] h-[16px] inline-flex items-center justify-center px-1 text-xs font-medium text-white bg-blue-600 rounded-full"></span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Notifications -->
+                    <div class="relative" x-data="{ unreadCount: 0, loading: true, notifications: [] }" x-init="fetch('/notifications/unread-count')
+                        .then(response => response.json())
+                        .then(data => {
+                            unreadCount = data.count;
+                            notifications = data.notifications;
+                            loading = false;
+                        });
+                    
+                    Echo.private('App.Models.User.' + 2392)
+                        .notification((notification) => {
+                            fetch('/notifications/unread-count')
+                                .then(response => response.json())
+                                .then(data => {
+                                    unreadCount = data.count;
+                                    notifications = data.notifications;
+                                    loading = false;
+                                });
+                        });">
+                        <button @click="notificationOpen = !notificationOpen"
+                            class="relative inline-flex items-center p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+                            <div class="relative">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                </svg>
+                                <span x-cloak x-show="!loading && unreadCount > 0" x-text="unreadCount"
+                                    class="absolute -top-1.5 -right-1.5 min-w-[16px] h-[16px] inline-flex items-center justify-center px-1 text-xs font-medium text-white bg-red-600 rounded-full"></span>
+                            </div>
+                        </button>
+
+                        <!-- Notifications Dropdown -->
+                        <div x-cloak x-show="notificationOpen" x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-75"
+                            x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                            @click.away="notificationOpen = false"
+                            class="fixed md:absolute inset-x-0 md:inset-x-auto md:right-0 top-16 md:top-auto mx-auto md:mx-0 mt-1 w-[98vw] md:w-80 max-w-sm bg-white dark:bg-gray-700 rounded-md shadow-lg overflow-hidden z-50 left-1/2 -translate-x-1/2 transform sm:left-auto sm:translate-x-0">
+                            <div class="py-2">
+                                <div
+                                    class="px-4 py-2 border-b border-gray-200 dark:border-gray-600 flex justify-between items-center">
+                                    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                                        နို့တစ်စာများ</h3>
+                                    <form action="https://fairway-main-v5kqlh.laravel.cloud/notifications/mark-all-as-read" method="POST"
+                                        class="inline">
+                                        <input type="hidden" name="_token" value="VfLAAuLQYcD0XEZniZ6m1v08cKLnoKEiQpdE0yBq" autocomplete="off">                                        <button type="submit"
+                                            class="text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300">အားလုံးဖတ်ရှုပြီးပါပြီ</button>
+                                    </form>
+                                </div>
+                                <div class="max-h-64 overflow-y-auto" id="notifications-list">
+                                    <template x-for="notification in notifications" :key="notification.id">
+                                        <form :action="`/notifications/${notification.id}/mark-as-read`" method="POST"
+                                            class="block">
+                                            <input type="hidden" name="_token" value="VfLAAuLQYcD0XEZniZ6m1v08cKLnoKEiQpdE0yBq" autocomplete="off">                                            <button type="submit"
+                                                class="w-full text-left px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600"
+                                                :class="{
+                                                    'bg-white dark:bg-gray-700': !notification
+                                                        .read_at,
+                                                    'bg-gray-50 dark:bg-gray-800': notification.read_at
+                                                }">
+                                                <p class="text-sm text-gray-700 dark:text-gray-300 leading-7"
+                                                    x-text="notification.message"></p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1"
+                                                    x-text="`${notification.course_name} · ${notification.created_at}`"></p>
+                                                <template x-if="notification.action_text">
+                                                    <span
+                                                        class="text-xs text-indigo-600 dark:text-indigo-400 mt-1 inline-block"
+                                                        x-text="`${notification.action_text} →`"></span>
+                                                </template>
+                                            </button>
+                                        </form>
+                                    </template>
+                                </div>
+                                <div class="px-4 py-2 border-t border-gray-200 dark:border-gray-600">
+                                    <a href="https://fairway-main-v5kqlh.laravel.cloud/notifications"
+                                        class="block text-center text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300">အားလုံးကိုကြည့်မည်</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile menu button -->
+                    <div class="-me-2 flex items-center lg:hidden">
+                        <button @click="open = !open"
+                            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
+                            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16" />
+                                <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Desktop Profile Dropdown -->
+                    <div class="hidden lg:block">
+                        <div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
+    <div @click="open = ! open">
+        <button
+                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                    <div class="flex items-center gap-1">
+                                        <span>AungPyaeSone</span>
+                                    </div>
+                                    <div class="ms-1">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </button>
+    </div>
+
+    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-75"
+        x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+        class="absolute z-50 mt-2 w-48 rounded-md shadow-lg ltr:origin-top-right rtl:origin-top-left end-0"
+        style="display: none;" @click="open = false">
+        <div class="rounded-md ring-1 ring-black ring-opacity-5 py-1 bg-white dark:bg-gray-700">
+            <a
+    class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out" href="https://fairway-main-v5kqlh.laravel.cloud/my-classes">သက်ဆိုင်တန်းခွဲများ</a>
+
+                                <a
+    class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out" href="https://fairway-main-v5kqlh.laravel.cloud/profile">ပရိုဖိုင်</a>
+
+                                <a
+    class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out" href="https://fairway-main-v5kqlh.laravel.cloud/profile/settings">ပရိုဖိုင်ပြင်ဆင်ရန်</a>
+
+                                <div class="border-t border-gray-200 dark:border-gray-600"></div>
+
+                                <!-- Authentication -->
+                                <form method="POST" action="https://fairway-main-v5kqlh.laravel.cloud/logout">
+                                    <input type="hidden" name="_token" value="VfLAAuLQYcD0XEZniZ6m1v08cKLnoKEiQpdE0yBq" autocomplete="off">                                    <a
+    class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out" href="https://fairway-main-v5kqlh.laravel.cloud/logout" onclick="event.preventDefault();
+                                                        this.closest('form').submit();">ထွက်မည်</a>
+                                </form>
+        </div>
+    </div>
+</div>
+                    </div>
+                            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div :class="{ 'block': open, 'hidden': !open }" class="hidden lg:hidden">
+        <div class="pt-2 pb-3 space-y-1">
+            <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out" href="">
+    ပင်မစာမျက်နှာ
+</a>
+            <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out" href="/waiting-list">
+    အတန်းသစ်စောင့်ရန်
+</a>
+            <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-indigo-400 dark:border-indigo-600 text-start text-base font-medium text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-900/50 focus:outline-none focus:text-indigo-800 dark:focus:text-indigo-200 focus:bg-indigo-100 dark:focus:bg-indigo-900 focus:border-indigo-700 dark:focus:border-indigo-300 transition duration-150 ease-in-out" href="/contact">
+    ဆက်သွယ်ရန်
+</a>
+        </div>
+
+        <!-- Mobile Authentication Menu -->
+                    <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+                <div class="px-4">
+                    <div class="font-medium text-base text-gray-800 dark:text-gray-200">AungPyaeSone</div>
+                </div>
+
+                <div class="mt-3 space-y-1">
+                                        <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out" href="/my-classes">
+    သက်ဆိုင်တန်းခွဲများ
+</a>
+                    <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out" href="/messages">
+    ပို့စာများ
+</a>
+                    <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out" href="/profile">
+    ပရိုဖိုင်
+</a>
+                    <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out" href="/profile/settings">
+    ပရိုဖိုင်ပြင်ဆင်ရန်
+</a>
+
+                    <!-- Authentication -->
+                    <form method="POST" action="">
+                        <input type="hidden" name="_token" value="VfLAAuLQYcD0XEZniZ6m1v08cKLnoKEiQpdE0yBq" autocomplete="off">                        <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out" href="/logout" onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+    ထွက်မည်
+</a>
+                    </form>
+                </div>
+            </div>
+            </div>
+</nav>
+        
+        <!-- Page Heading -->
+        
+        <!-- Page Content -->
+        <main class="flex-grow">
+            <div class="sm:py-6">
+        <div class="mx-auto sm:px-4 space-y-6">
+            <div class="p-4 sm:p-8 bg-white/60 dark:bg-gray-800/60 shadow sm:rounded-lg">
+                <div class="w-full max-w-xl">
+                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                        ဆက်သွယ်ရန်
+                    </h2>
+
+                    <div class="mt-6 space-y-6">
+                        <div class="space-y-4">
+                            <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100">
+                                Fairway Technology
+                            </h3>
+                            <div class="flex items-start gap-2 max-w-md">
+                                <svg class="h-4 w-4 flex-shrink-0 text-gray-600 dark:text-gray-400 mr-1 mt-[14px]"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                </svg>
+                                <p
+                                    class="text-sm leading-6 text-gray-600 dark:text-gray-400 break-words leading-9">
+                                    အမှတ် (၄၂၉) အခန်း (8-A)၊ ကုန်သည်လမ်း (သိမ်ဖြူလမ်းထောင့်)၊ ဗိုလ်တစ်ထောင်မြို့နယ်၊ ရန်ကုန်မြို့။
+                                </p>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <svg class="h-4 w-4 flex-shrink-0 text-gray-600 dark:text-gray-400 mr-1 mt-[5px]"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                                </svg>
+                                <p class="text-sm leading-6 text-gray-600 dark:text-gray-400">
+                                    (09) 252 426 388
+                                </p>
+                            </div>
+
+                            <div class="space-y-6 pt-4">
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="h-4 w-4 flex-shrink-0 text-gray-600 dark:text-gray-400 mr-1 mt-[5px]"
+                                            viewBox="0 0 512 512">
+                                            <rect x="80" y="112" rx="32" ry="32" fill="none"
+                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="32" />
+                                            <rect x="80" y="304" width="352" height="128" rx="32"
+                                                ry="32" fill="none" stroke="currentColor"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
+                                            <path
+                                                d="M400 112H112a32.09 32.09 0 01-32-32h0a32.09 32.09 0 0132-32h288a32.09 32.09 0 0132 32h0a32.09 32.09 0 01-32 32zM144 432v22a10 10 0 01-10 10h-28a10 10 0 01-10-10v-22zM416 432v22a10 10 0 01-10 10h-28a10 10 0 01-10-10v-22z"
+                                                fill="none" stroke="currentColor" stroke-linecap="round"
+                                                stroke-linejoin="round" stroke-width="32" />
+                                            <circle cx="368" cy="368" r="16" fill="none"
+                                                stroke="currentColor" stroke-linejoin="round" stroke-width="32" />
+                                            <circle cx="144" cy="368" r="16" fill="none"
+                                                stroke="currentColor" stroke-linejoin="round" stroke-width="32" />
+                                            <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                                stroke-linejoin="round" stroke-width="32"
+                                                d="M256 112v192M80 80v288M432 80v288" />
+                                        </svg>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                                            ကြယ်ငါးပွင့်မှတ်တိုင် (သိမ်ဖြူလမ်း)</p>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2 pl-6">
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">25</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">34</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">43</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">64</span>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="h-4 w-4 flex-shrink-0 text-gray-600 dark:text-gray-400 mr-1 mt-[5px]"
+                                            viewBox="0 0 512 512">
+                                            <rect x="80" y="112" rx="32" ry="32" fill="none"
+                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="32" />
+                                            <rect x="80" y="304" width="352" height="128" rx="32"
+                                                ry="32" fill="none" stroke="currentColor"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
+                                            <path
+                                                d="M400 112H112a32.09 32.09 0 01-32-32h0a32.09 32.09 0 0132-32h288a32.09 32.09 0 0132 32h0a32.09 32.09 0 01-32 32zM144 432v22a10 10 0 01-10 10h-28a10 10 0 01-10-10v-22zM416 432v22a10 10 0 01-10 10h-28a10 10 0 01-10-10v-22z"
+                                                fill="none" stroke="currentColor" stroke-linecap="round"
+                                                stroke-linejoin="round" stroke-width="32" />
+                                            <circle cx="368" cy="368" r="16" fill="none"
+                                                stroke="currentColor" stroke-linejoin="round" stroke-width="32" />
+                                            <circle cx="144" cy="368" r="16" fill="none"
+                                                stroke="currentColor" stroke-linejoin="round" stroke-width="32" />
+                                            <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                                stroke-linejoin="round" stroke-width="32"
+                                                d="M256 112v192M80 80v288M432 80v288" />
+                                        </svg>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                                            ဘိုကလေးစျေးမှတ်တိုင် (ကုန်သည်လမ်း)</p>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2 pl-6">
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">3</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">7</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">20</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">31</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">56</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">70</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">81</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">82</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">89</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">98</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">110</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">111</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">112</span>
+                                        <span
+                                            class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-sm font-medium border border-yellow-300 dark:border-yellow-800">113</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-6">
+                            <div class="aspect-[4/5] sm:aspect-video w-full rounded-lg overflow-hidden shadow-lg">
+                                <iframe class="w-full h-full border-0"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3819.0647324040934!2d96.16424757495558!3d16.771502050485775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30c1ec6252923d87%3A0xa10f9a1b0b67136a!2sFairway%20Technology!5e0!3m2!1sen!2smm!4v1710000000000!5m2!1sen!2smm"
+                                    allowfullscreen loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white/70 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700">
+            <div class="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                    <!-- Contact Information -->
+                    <div class="col-span-1 md:col-span-1 lg:col-span-2">
+                        <h3 class="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">ဆက်သွယ်ရန်
+                        </h3>
+                        <ul role="list" class="mt-6 space-y-4">
+                            <li class="flex items-start gap-2">
+                                <svg class="h-4 w-4 flex-shrink-0 text-gray-600 dark:text-gray-400 mr-1 mt-[14px]"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                </svg>
+                                <p
+                                    class="text-sm leading-6 text-gray-600 dark:text-gray-400 max-w-xs leading-9">
+                                    အမှတ် (၄၂၉) အခန်း (8-A)၊ ကုန်သည်လမ်း (သိမ်ဖြူလမ်းထောင့်)၊ ဗိုလ်တစ်ထောင်မြို့နယ်၊ ရန်ကုန်မြို့။</p>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg class="h-4 w-4 flex-shrink-0 text-gray-600 dark:text-gray-400 mr-1 mt-[5px]"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                                </svg>
+                                <p class="text-sm leading-6 text-gray-600 dark:text-gray-400">(09) 252 426 388
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Navigation Links -->
+                    <div class="col-span-1 md:col-span-1 lg:col-span-2">
+                        <nav class="grid grid-cols-1 gap-8">
+                            <div>
+                                <h3 class="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+                                    လင့်များ</h3>
+                                <ul role="list" class="mt-6 space-y-4">
+                                    <li>
+                                        <a href=""
+                                            class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">ပင်မစာမျက်နှာ</a>
+                                    </li>
+                                    <li>
+                                        <a href="/certificates/verify/form"
+                                            class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">သင်တန်းဆင်းလက်မှတ်စစ်</a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.facebook.com/fairway.technology"
+                                            class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">Facebook Page</a>
+                                    </li>
+                                    <li>
+                                        <a href="https://eimaung.com"
+                                            class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">စာအုပ်များရယူရန်</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+
+                    <!-- App Links -->
+                    <div class="col-span-1 md:col-span-1 lg:col-span-1">
+                        <h3 class="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+                            Apps
+                        </h3>
+                        <div class="flex space-x-6 mt-6">
+                            <a href="https://play.google.com/store/apps/details?id=com.fairwayweb.enroll"
+                                class="text-gray-500 hover:text-gray-400">
+                                <span class="sr-only">Android</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-6 w-6"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="m10.213 1.471.691-1.26q.069-.124-.048-.192-.128-.057-.195.058l-.7 1.27A4.8 4.8 0 0 0 8.005.941q-1.032 0-1.956.404l-.7-1.27Q5.281-.037 5.154.02q-.117.069-.049.193l.691 1.259a4.25 4.25 0 0 0-1.673 1.476A3.7 3.7 0 0 0 3.5 5.02h9q0-1.125-.623-2.072a4.27 4.27 0 0 0-1.664-1.476ZM6.22 3.303a.37.37 0 0 1-.267.11.35.35 0 0 1-.263-.11.37.37 0 0 1-.107-.264.37.37 0 0 1 .107-.265.35.35 0 0 1 .263-.11q.155 0 .267.11a.36.36 0 0 1 .112.265.36.36 0 0 1-.112.264m4.101 0a.35.35 0 0 1-.262.11.37.37 0 0 1-.268-.11.36.36 0 0 1-.112-.264q0-.154.112-.265a.37.37 0 0 1 .268-.11q.155 0 .262.11a.37.37 0 0 1 .107.265q0 .153-.107.264M3.5 11.77q0 .441.311.75.311.306.76.307h.758l.01 2.182q0 .414.292.703a.96.96 0 0 0 .7.288.97.97 0 0 0 .71-.288.95.95 0 0 0 .292-.703v-2.182h1.343v2.182q0 .414.292.703a.97.97 0 0 0 .71.288.97.97 0 0 0 .71-.288.95.95 0 0 0 .292-.703v-2.182h.76q.436 0 .749-.308.31-.307.311-.75V5.365h-9zm10.495-6.587a.98.98 0 0 0-.702.278.9.9 0 0 0-.293.685v4.063q0 .406.293.69a.97.97 0 0 0 .702.284q.42 0 .712-.284a.92.92 0 0 0 .293-.69V6.146a.9.9 0 0 0-.293-.685 1 1 0 0 0-.712-.278m-12.702.283a1 1 0 0 1 .712-.283q.41 0 .702.283a.9.9 0 0 1 .293.68v4.063a.93.93 0 0 1-.288.69.97.97 0 0 1-.707.284 1 1 0 0 1-.712-.284.92.92 0 0 1-.293-.69V6.146q0-.396.293-.68" />
+                                </svg>
+                            </a>
+                            <a href="https://apps.apple.com/mm/app/fairway-technology/id6743664691" class="text-gray-500 hover:text-gray-400">
+                                <span class="sr-only">iOS</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-6 w-6"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282" />
+                                    <path
+                                        d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Copyright -->
+                <div class="mt-12 border-t border-gray-900/10 dark:border-gray-100/10 pt-8">
+                    <p class="text-xs leading-5 text-gray-500 dark:text-gray-400 text-center">
+                        &copy; 2025 Fairway Technology. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script defer src="main.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <svg viewBox="0 0 1280 720">
+        <mask id="maskLeft">
+          <rect x="-50%" width="100%" height="100%" fill="#fff"/>
+        </mask>
+        <mask id="maskRight">
+          <rect x="50%" width="100%" height="100%" fill="#fff"/>
+        </mask>
+        <g font-size="150">
+          <g mask="url(#maskLeft)" fill="#fff" class="left">
+            <text y="120">CODE</text>
+            <text y="250">DRIVEN</text>
+            <text y="380">ANIMATION</text>
+          </g>
+          <g mask="url(#maskRight)" fill="#aaa" class="right">
+            <text y="120">CODE</text>
+            <text y="250">DRIVEN</text>
+            <text y="380">ANIMATION</text>
+          </g>
+        </g>
+      </svg>
+</body>
+</html>

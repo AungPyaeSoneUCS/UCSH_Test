@@ -1,0 +1,17 @@
+/* Copyright (c) 2025 by Pavel Boytchev (https://codepen.io/boytchev/pen/YPXJgLd) */
+body {
+  overflow: hidden;
+  margin: 0;
+}
+
+#upper {
+	z-index: 1;
+	filter: blur(5px) brightness(200%);
+	mix-blend-mode: screen;
+}
+
+canvas {
+	position: absolute;
+	left: 0;
+	top: 0;
+}

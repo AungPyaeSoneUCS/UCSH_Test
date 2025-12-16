@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+
+        /* Copyright (c) 2025 by Puneet | Techartist (https://codepen.io/VoXelo/pen/wBBrpXv) */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            overflow: hidden;
+            color-scheme: dark;
+        }
+
+        .font-serif-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .card-container {
+            position: relative;
+            display: block;
+            width: 100%;
+            max-width: 380px;
+            aspect-ratio: 9 / 15.5;
+            max-height: 90vh;
+            border-radius: 1.75rem;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            box-shadow:
+                0 0 0 2px rgba(255, 214, 102, 0.4),
+                0 0 25px 8px rgba(255, 214, 102, 0.15);
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                        box-shadow 0.4s ease-out,
+                        background-size 1.5s ease-out;
+            cursor: grab;
+            will-change: transform, box-shadow, background-size;
+        }
+
+        .card-container:hover {
+            box-shadow:
+                0 0 0 3px rgba(255, 214, 102, 0.6),
+                0 0 35px 12px rgba(255, 214, 102, 0.25);
+        }
+
+        .inner-border-overlay {
+            position: absolute;
+            inset: 14px;
+            border-radius: 1.375rem;
+            pointer-events: none;
+            z-index: 10;
+            box-shadow:
+                inset 0.5px 0.5px 1.5px rgba(255, 235, 180, 0.6),
+                inset -1px -1px 1px rgba(160, 110, 0, 0.5),
+                inset 3px 3px 6px rgba(0, 0, 0, 0.25);
+            transform: translateZ(30px);
+            will-change: transform;
+            border: 1px solid rgba(255, 214, 102, 0.1);
+        }
+
+        .content-area {
+            position: absolute;
+            inset: 14px;
+            border-radius: 1.375rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            z-index: 5;
+            transform: translateZ(60px);
+            will-change: transform;
+        }
+
+        .elevation-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(250, 204, 21, 0.85);
+            border-radius: 9999px;
+            padding: 0.5rem 1rem;
+            color: #422006;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.025em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transform: translateZ(70px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            z-index: 25;
+            will-change: transform;
+        }
+
+        .elevation-badge svg {
+            width: 1em;
+            height: 1em;
+        }
+
+
+        .gradient-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 75%;
+            background: linear-gradient(to top, rgba(10, 10, 10, 0.9) 0%, rgba(10, 10, 10, 0.65) 50%, transparent 100%);
+            pointer-events: none;
+            z-index: 15;
+            transform: translateZ(5px);
+            will-change: transform;
+        }
+
+        .text-block {
+            position: relative;
+            z-index: 20;
+            color: #f8fafc;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            transform: translateZ(25px);
+            will-change: transform;
+        }
+
+        .text-block h1 {
+            letter-spacing: 0.025em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .text-block p {
+            color: #cbd5e1;
+        }
+
+        .mountain-icon {
+            width: 1.5em;
+            height: 1.5em;
+            fill: currentColor;
+            opacity: 0.8;
+            vertical-align: middle;
+            margin-bottom: -0.1em;
+        }
+
+        .tour-button {
+            position: relative;
+            z-index: 20;
+            background: linear-gradient(145deg, #fde047, #facc15);
+            color: #422006;
+            font-weight: 600;
+            padding: 0.75rem 1.75rem;
+            border-radius: 9999px;
+            text-align: center;
+            width: auto;
+            min-width: 190px;
+            max-width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow:
+                inset 2px 2px 4px rgba(160, 110, 0, 0.6),
+                inset -2px -2px 4px rgba(255, 245, 200, 0.5),
+                0 1px 2px rgba(0,0,0,0.1);
+            transform: translateZ(40px);
+            will-change: transform, box-shadow, background;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            letter-spacing: 0.025em;
+            margin-top: 1rem;
+        }
+
+        .tour-button:hover {
+            background: linear-gradient(145deg, #feec80, #fde047);
+            box-shadow:
+                inset 2px 2px 5px rgba(160, 110, 0, 0.5),
+                inset -2px -2px 5px rgba(255, 245, 200, 0.6),
+                0 2px 4px rgba(0,0,0,0.15);
+            transform: translateZ(40px) translateY(-2px);
+            color: #3f2810;
+        }
+
+        .tour-button:active {
+            background: linear-gradient(145deg, #facc15, #eab308);
+            box-shadow:
+                inset -2px -2px 4px rgba(160, 110, 0, 0.6),
+                inset 2px 2px 4px rgba(255, 245, 200, 0.5),
+                0 0 0 rgba(0,0,0,0);
+            transform: translateZ(40px) translateY(0px);
+        }
+    </style>
+
+    <div class="card-container"
+         style="background-image: url('https://static.wixstatic.com/media/3d9313_45b151504946477791c3add537ac398a~mv2.png');"
+         data-tilt data-tilt-max="10" data-tilt-speed="500" data-tilt-perspective="1800" data-tilt-glare data-tilt-max-glare="0.1" data-tilt-scale="1.03" data-tilt-reset="true">
+
+        <div class="inner-border-overlay" data-tilt-transform-element></div>
+
+        <div class="content-area p-4 sm:p-5 lg:p-7" data-tilt-transform-element>
+            <div class="gradient-overlay"></div>
+
+            <div class="elevation-badge" data-tilt-transform-element>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
+                  <path d="M12 2L6.5 12h11L12 2zm5.5 11l-5.5 9-5.5-9h11z"/>
+                 </svg>
+                4,478 m
+            </div>
+
+             <div class="text-block" data-tilt-transform-element>
+                <h1 class="font-serif-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-2">
+                    <svg class="mountain-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14.344 6.219l-2.344-3.219-2.344 3.219-4.656 7.781h14l-4.656-7.781zm-7.344 9.781l-1 2h10l1.625-2.708-1.501-.292-1.124 1h-4l-1.125-1-1.875.001zm11.69-1l-.69.999 1.311 1.311 1.689.69-1.311-1.311-.689-.69z"/>
+                    </svg>
+                    Matterhorn
+                </h1>
+                <p class="text-sm sm:text-base lg:text-lg font-light">
+                    Zermatt, Switzerland
+                </p>
+            </div>
+
+            <button class="tour-button" data-tilt-transform-element>
+                Take the tour
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 5l7 7-7 7"></path>
+                    <path d="M5 12h14"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+    <script>
+        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+        });
+    </script>
+
+</body>
+</html>

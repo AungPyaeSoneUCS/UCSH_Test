@@ -1,0 +1,120 @@
+/* Copyright (c) 2025 by Joe Taylor (https://codepen.io/joebentaylor/pen/JoozYRe) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+* {
+  text-rendering: geometricPrecision;
+}
+
+.webgl {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+.page {
+  width: 100%;
+  height: 100lvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  position: relative;
+  width: 684px;
+  height: 550px;
+  border-radius: 36px;
+  border: 2px solid transparent;
+  overflow: visible;
+  transform-style: preserve-3d;
+  background: linear-gradient(#fff, #fff) padding-box, linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05)) border-box;
+  /* border gradient */
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+}
+.card:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 36px;
+  background: url("https://assets.codepen.io/3165458/pattern.png");
+}
+.card:after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  border-radius: 36px;
+  background: linear-gradient(to top, white 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.card .quest {
+  position: absolute;
+  z-index: 3;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.quest img {
+  position: relative;
+  display: block;
+  width: 552px;
+  aspect-ratio: 552/468;
+  transform: translateZ(50px);
+}
+
+.card article {
+  position: absolute;
+  z-index: 3;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px;
+  text-align: center;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+.card article h2 {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 48px;
+  line-height: 1.2;
+  margin: 0;
+  color: #1c2b33;
+  transform: translateZ(50px);
+}
+.card article p {
+  margin: 0;
+  color: #1c2b33;
+  max-width: 70%;
+  margin: 0 auto;
+  transform: translateZ(50px);
+}
+.card article p,
+.card article a {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1.44;
+}
+.card article a {
+  margin-top: 12px;
+  padding: 18px 24px;
+  background: #0081fa;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #fff;
+  transform: translateZ(50px);
+}

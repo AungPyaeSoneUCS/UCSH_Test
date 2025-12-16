@@ -1,0 +1,53 @@
+/* Copyright (c) 2025 by Franco Beltramella (https://codepen.io/Franbeltramella/pen/RNPNMzg) */
+body {
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.container {
+  text-align: center;
+}
+
+.button-creative {
+  position: relative;
+  display: inline-block;
+  padding: 1em 2em;
+  background: #111;
+  color: white;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: color 0.3s;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  z-index: 1;
+}
+
+.button-creative::before {
+  content: '';
+  position: absolute;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, #00ffc3 10%, transparent 70%);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.4s ease;
+  border-radius: 50%;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.button-creative:hover::before {
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.button-creative:hover {
+  color: #00ffc3;
+}

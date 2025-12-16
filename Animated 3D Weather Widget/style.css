@@ -1,0 +1,104 @@
+/* Copyright (c) 2025 by Puneet | Techartist (https://codepen.io/VoXelo/pen/XJJwjqO) */
+
+.body-wrapper {
+    font-family: 'Outfit', sans-serif;
+    background: linear-gradient(135deg, #3a3897 0%, #2c2a72 40%, #1a1a4e 100%);
+}
+
+.weather-widget::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%);
+    animation: shimmer 15s infinite linear;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes shimmer {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.weather-icon-main {
+    filter: drop-shadow(0 0 12px rgba(220, 220, 255, 0.5));
+    animation: floating 3.5s ease-in-out infinite;
+}
+
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
+
+#cloud-container {
+    pointer-events: auto;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.animate-fadeInUp {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInScaleUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+.animate-fadeInScaleUp {
+    opacity: 0;
+    animation: fadeInScaleUp 0.7s ease-out forwards;
+}
+
+@keyframes gentleBob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+.animate-gentleBob {
+    animation: gentleBob 2.5s ease-in-out infinite;
+}
+
+.sun-info .sunrise:hover .sun-icon,
+.sun-info .sunset:hover .sun-icon {
+    transform: rotate(15deg) scale(1.15);
+}
+.sun-icon {
+    transition: transform 0.3s ease-in-out;
+}
+
+.forecast-day:hover {
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.1), 0 4px 10px rgba(0,0,0,0.2);
+}
+.forecast-day:hover .forecast-icon {
+    transform: scale(1.2) translateY(-2px);
+    transition: transform 0.3s ease-out;
+}
+.forecast-day .forecast-icon {
+     transition: transform 0.3s ease-out;
+}
+
+.delay-100 { animation-delay: 0.1s !important; }
+.delay-200 { animation-delay: 0.2s !important; }
+.delay-300 { animation-delay: 0.3s !important; }
+.delay-400 { animation-delay: 0.4s !important; }
+.delay-500 { animation-delay: 0.5s !important; }
+.delay-600 { animation-delay: 0.6s !important; }
+.delay-700 { animation-delay: 0.7s !important; }
